@@ -2,9 +2,12 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "dev": "nodemon server.ts"
   },
   "keywords": [],
   "author": "",
@@ -14,13 +17,20 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mongoose": "^9.7.3"
+    "jsonwebtoken": "^9.0.3",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^6.0.0",
+    "logform": "^2.7.0",
+    "mongoose": "^9.7.3",
+    "winston": "^3.19.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^26.0.1",
+    "@types/jsonwebtoken": "^9.0.10",
     "tsx": "^4.22.4",
+    "nodemon": "^3.1.10",
     "typescript": "^6.0.3"
   }
 }
