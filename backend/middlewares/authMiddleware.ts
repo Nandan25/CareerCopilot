@@ -6,28 +6,49 @@ import { AppLogger } from "../utils/logger";
 
 export const protect = async (req: any, res: any, next: any) => {
     try {
-        AppLogger.info(`Entering in protect middleware`);
+        AppLogger.info("Entering protect middleware");
 
-        let token = req.headers.authorization;
+        let token: string | undefined;
 
-        const secret = process.env.JWT_SECRET ?? 'test-secret';
-
-        if (token && token.startsWith("Bearer")) {
-            token = token.split(" ")[1];
-            const decoded: any = jwt.verify(token, secret);
-            req.user = await User.findById(decoded.id).select("-password");
-            next();
-        }
-        else {
-            res.status(401).json({ message: "Not authorized, no token" })
+        // Check Authorization header first
+        if (
+            req.headers.authorization &&
+            req.headers.authorization.startsWith("Bearer ")
+        ) {
+            token = req.headers.authorization.split(" ")[1];
         }
 
+        // If no header token, check cookies
+        if (!token && req.cookies?.token) {
+            token = req.cookies.token;
+        }
+
+        if (!token) {
+            return res.status(401).json({
+                message: "Not authorized, no token",
+            });
+        }
+
+        const secret = process.env.JWT_SECRET ?? "test-secret";
+        const decoded: any = jwt.verify(token, secret);
+
+        req.user = await User.findById(decoded.id).select("-password");
+
+        if (!req.user) {
+            return res.status(401).json({
+                message: "User not found",
+            });
+        }
+
+        next();
     } catch (e: any) {
-        console.log(e);
-        AppLogger.error(`Error in protect middleware:${e.message}`);
-        res.status(401).json({ message: "Token failed", error: e.message })
+        AppLogger.error(`Error in protect middleware: ${e.message}`);
+        return res.status(401).json({
+            message: "Token failed",
+            error: e.message,
+        });
     }
-}
+};
 
 export const limitGeminiUsage = async (req: any, res: any, next: any) => {
     try {
