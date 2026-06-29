@@ -16,6 +16,9 @@
   "dependencies": {
     "@google/genai": "^2.10.0",
     "@types/bcrypt": "^5.0.2",
+    "@types/passport": "^1.0.17",
+    "@types/passport-google-oauth20": "^2.0.17",
+    "@types/passport-local": "^1.0.38",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
@@ -24,6 +27,9 @@
     "jsonwebtoken": "^9.0.3",
     "logform": "^2.7.0",
     "mongoose": "^9.7.3",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0",
     "winston": "^3.19.0"
   },
   "devDependencies": {
