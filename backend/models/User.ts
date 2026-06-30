@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, unique: true, sparse: true }, // Not required for Google logins
     password: { type: String }, // Not required for Google logins
     picture: { type: String, },
-
+    geminiKey: { type: String },
     geminiUsage: {
         type: geminiUsageSchema,
         default: () => ({ count: 0, lastReset: new Date() }),
